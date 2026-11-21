@@ -72,7 +72,8 @@ export const viConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
               { text: 'CYCLE_TIMER — Tạo Xung Chu kỳ Bất đối xứng', link: '/vi/blocks/cycle-timer' },
               { text: 'CTU — Bộ Đếm Tiến (Count Up)', link: '/vi/blocks/ctu' },
               { text: 'CTD — Bộ Đếm Lùi (Count Down)', link: '/vi/blocks/ctd' },
-              { text: 'SCALE — Tuyến tính hóa & Hiệu chuẩn 2 Điểm', link: '/vi/blocks/scale' }
+              { text: 'SCALE — Tuyến tính hóa & Hiệu chuẩn 2 Điểm', link: '/vi/blocks/scale' },
+              { text: 'MATH — Khối Tính toán Số học (ALU)', link: '/vi/blocks/math' }
             ]
           },
           {
@@ -102,6 +103,7 @@ export const viConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
         items: [
           { text: 'Cấu hình RS-485 & Bản đồ SCADA Slave', link: '/vi/tools/rs485-and-scada-slave' },
           { text: 'Cấu hình MQTT TLS & Mạng Wi-Fi', link: '/vi/tools/mqtt-and-wifi-config' },
+          { text: 'Mạng Không dây Zigbee Mesh', link: '/vi/tools/zigbee-mesh-config' },
           { text: 'Không gian DTU Gateway Studio', link: '/vi/tools/dtu-gateway-studio' },
           { text: 'Mô phỏng Offline & Gỡ lỗi Trực tuyến', link: '/vi/tools/simulator-and-live-debug' },
           { text: 'Trợ lý Kỹ thuật SynaptiX AI Copilot', link: '/vi/tools/ai-copilot' },

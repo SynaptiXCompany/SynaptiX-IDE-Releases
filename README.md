@@ -1,6 +1,6 @@
 # SynaptiX IDE — Industrial PLC Programming & Automation Environment
 
-[![Latest Release](https://img.shields.io/github/v/release/hoanv-synaptix/SynaptiX-IDE-Releases?color=107C41&label=Latest%20Release)](https://github.com/hoanv-synaptix/SynaptiX-IDE-Releases/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/SynaptiXCompany/SynaptiX-IDE-Releases?color=107C41&label=Latest%20Release)](https://github.com/SynaptiXCompany/SynaptiX-IDE-Releases/releases/latest)
 [![Platform](https://img.shields.io/badge/.NET-8.0%20WPF%20(x64)-006487?logo=dotnet)](https://dotnet.microsoft.com/)
 [![Architecture](https://img.shields.io/badge/Hardware-ARM%20Cortex--M33%20Core-006487)](https://dotnet.microsoft.com/)
 [![Execution Model](https://img.shields.io/badge/Scan%20Cycle-10ms%20Deterministic%20Loop-107C41)](#2-system-architecture)
@@ -16,19 +16,29 @@
 ## 📖 Online Technical Documentation & Wiki
 
 Comprehensive technical reference manual, function block datasheets, workspace guides, and system integration blueprints:
-- 🌐 **English Documentation:** [https://hoanv-synaptix.github.io/SynaptiX-IDE-Releases/](https://hoanv-synaptix.github.io/SynaptiX-IDE-Releases/)
-- 🇻🇳 **Tài liệu Kỹ thuật Tiếng Việt:** [https://hoanv-synaptix.github.io/SynaptiX-IDE-Releases/vi/](https://hoanv-synaptix.github.io/SynaptiX-IDE-Releases/vi/)
+- 🌐 **English Documentation:** [https://SynaptiXCompany.github.io/SynaptiX-IDE-Releases/](https://SynaptiXCompany.github.io/SynaptiX-IDE-Releases/)
+- 🇻🇳 **Tài liệu Kỹ thuật Tiếng Việt:** [https://SynaptiXCompany.github.io/SynaptiX-IDE-Releases/vi/](https://SynaptiXCompany.github.io/SynaptiX-IDE-Releases/vi/)
 
 ---
 
 ## 📥 Downloads & Installation
 
-SynaptiX IDE is distributed as a **Standalone Single-File Executable (no installer or external runtime required)**:
+SynaptiX IDE is distributed in two official editions: **Desktop Setup Installer (Recommended)** and **Standalone Portable Executable**:
 
 | Edition | Architecture | Download File | Notes |
 | :---: | :---: | :---: | :--- |
-| **v1.3.1 (Latest)** | Windows x64 (.exe) | [**Download `SimplePLC.Studio.exe`**](https://github.com/hoanv-synaptix/SynaptiX-IDE-Releases/releases/latest/download/SimplePLC.Studio.exe) | Portable single-file executable for Windows 10/11 |
-| **All Releases** | GitHub Releases | [**Browse Release History**](https://github.com/hoanv-synaptix/SynaptiX-IDE-Releases/releases) | Full changelog, release notes, and assets |
+| **v2.15.5 (Installer)** | Windows x64 (.exe) | [**Download `SynaptiX_IDE_Setup_v2.15.5.exe`**](https://github.com/SynaptiXCompany/SynaptiX-IDE-Releases/releases/latest/download/SynaptiX_IDE_Setup_v2.15.5.exe) | **Recommended** — Full installer wizard with desktop & start menu shortcuts, `.synx` file association, and bundled MCU Emulator |
+| **v2.15.5 (Portable)** | Windows x64 (.exe) | [**Download `SimplePLC.Studio.exe`**](https://github.com/SynaptiXCompany/SynaptiX-IDE-Releases/releases/latest/download/SimplePLC.Studio.exe) | Portable single-file standalone executable for Windows 10/11 |
+
+| **All Releases** | GitHub Releases | [**Browse Release History**](https://github.com/SynaptiXCompany/SynaptiX-IDE-Releases/releases) | Full changelog, release notes, and assets |
+
+### Official User Manual & Technical Documentation:
+- **Online Documentation Portal & Interactive Wiki:**
+  - 🌐 [**English Technical Reference Portal**](https://SynaptiXCompany.github.io/SynaptiX-IDE-Releases/) — Full API reference, block library, and system configuration guides.
+  - 🇻🇳 [**Cổng Tài liệu & Tra cứu Kỹ thuật Tiếng Việt**](https://SynaptiXCompany.github.io/SynaptiX-IDE-Releases/vi/) — Tra cứu trực tuyến toàn diện bằng tiếng Việt.
+- **Printable Industrial PDF Manuals (Tiêu chuẩn ANSI/ISA-101):**
+  - 🇬🇧 [**`SynaptiX_User_Manual_EN.pdf`**](https://SynaptiXCompany.github.io/SynaptiX-IDE-Releases/downloads/SynaptiX_User_Manual_EN.pdf) — Complete 128-page English Industrial User Manual.
+  - 🇻🇳 [**`SynaptiX_User_Manual_VI.pdf`**](https://SynaptiXCompany.github.io/SynaptiX-IDE-Releases/downloads/SynaptiX_User_Manual_VI.pdf) — Sổ tay Hướng dẫn Sử dụng Kỹ thuật Tiếng Việt 130 trang hoàn chỉnh.
 
 ### System Requirements:
 - **Operating System:** Windows 10 or Windows 11 (64-bit).

@@ -21,13 +21,13 @@ Press `Ctrl+Shift+M` (or navigate to **Device -> MQTT Broker Configuration...**)
 
 | Parameter | Default | Range / Format | Functional Description |
 | :--- | :--- | :--- | :--- |
-| **Enable MQTT Service** | `Disabled` | `Enabled` / `Disabled` | Master switch activating the embedded asynchronous MQTT client worker on the device. |
-| **Broker Host / IP** | *(Empty)* | Up to `64` ASCII chars | FQDN hostname (e.g., `a1b2c3d4-ats.iot.ap-southeast-1.amazonaws.com`, `broker.emqx.io`) or IPv4 address (e.g., `192.168.1.200`) of the target broker. |
-| **Port** | `1883` (`8883` w/ TLS) | `1 .. 65535` | Automatically toggles between `1883` (unencrypted TCP) and `8883` (encrypted MQTTS) when **Use TLS** is switched, while still allowing custom enterprise ports. |
-| **Client ID** | Device Serial | Up to `32` ASCII chars | Unique MQTT client identifier. Must be globally unique on the target broker to prevent disconnect-loop storms (`CONNACK` session takeover). |
-| **Username / Password** | *(Empty)* | Up to `32` ASCII chars each | Optional credentials for SASL/password-authenticated brokers (EMQX, HiveMQ Cloud, Mosquitto, RabbitMQ). Leave blank when using certificate-only mTLS (such as AWS IoT Core). |
-| **Keep-Alive Interval** | `60 s` | `10 .. 3600 s` | Maximum idle interval before the edge device transmits a `PINGREQ` packet to hold NAT firewall state tables open and verify broker reachability. |
-| **Clean Session** | `Enabled` (`true`) | `true` / `false` | When `true`, starts a fresh session on reconnect. Set to `false` if you want the broker to queue `QoS 1` / `QoS 2` inbound [`MQTT_SUB`](/blocks/mqtt-sub) commands while the device is temporarily offline. |
+| Enable MQTT Service | `Disabled` | `Enabled` / `Disabled` | Master switch activating the embedded asynchronous MQTT client worker on the device. |
+| Broker Host / IP | *(Empty)* | Up to `64` ASCII chars | FQDN hostname (e.g., `a1b2c3d4-ats.iot.ap-southeast-1.amazonaws.com`, `broker.emqx.io`) or IPv4 address (e.g., `192.168.1.200`) of the target broker. |
+| Port | `1883` (`8883` w/ TLS) | `1 .. 65535` | Automatically toggles between `1883` (unencrypted TCP) and `8883` (encrypted MQTTS) when Use TLS is switched, while still allowing custom enterprise ports. |
+| Client ID | Device Serial | Up to `32` ASCII chars | Unique MQTT client identifier. Must be globally unique on the target broker to prevent disconnect-loop storms (`CONNACK` session takeover). |
+| Username / Password | *(Empty)* | Up to `32` ASCII chars each | Optional credentials for SASL/password-authenticated brokers (EMQX, HiveMQ Cloud, Mosquitto, RabbitMQ). Leave blank when using certificate-only mTLS (such as AWS IoT Core). |
+| Keep-Alive Interval | `60 s` | `10 .. 3600 s` | Maximum idle interval before the edge device transmits a `PINGREQ` packet to hold NAT firewall state tables open and verify broker reachability. |
+| Clean Session | `Enabled` (`true`) | `true` / `false` | When `true`, starts a fresh session on reconnect. Set to `false` if you want the broker to queue `QoS 1` / `QoS 2` inbound [`MQTT_SUB`](/blocks/mqtt-sub) commands while the device is temporarily offline. |
 
 ---
 
@@ -37,11 +37,11 @@ When an industrial edge node loses 24V DC power or suffers a severed WAN fiber l
 
 | LWT Field | Default Value | Recommended Production Setting |
 | :--- | :--- | :--- |
-| **Enable LWT (`WillEnabled`)** | `Disabled` | `Enabled` on all production telemetry gateways. |
-| **Will Topic (`WillTopic`)** | `synaptix/device/status` | Dedicated device health topic, e.g., `factory/line1/node01/status`. |
-| **Will Payload (`WillPayload`)** | `{"status":"offline"}` | Compact JSON heartbeat state, paired with an online birth message on startup. |
-| **Will QoS (`WillQos`)** | `QoS 1` | `QoS 1` (At Least Once) guarantees SCADA/Cloud dashboards receive the fault notification. |
-| **Will Retain (`WillRetain`)** | `true` | `true` ensures newly opened HMI/Web dashboards immediately see whether the node is currently online or offline. |
+| Enable LWT (`WillEnabled`) | `Disabled` | `Enabled` on all production telemetry gateways. |
+| Will Topic (`WillTopic`) | `synaptix/device/status` | Dedicated device health topic, e.g., `factory/line1/node01/status`. |
+| Will Payload (`WillPayload`) | `offline` | Plain text offline state string (max 30 characters). Plain text (`offline`, `0`, `lost`) is strongly recommended over JSON to avoid double-quote `"` syntax errors in Wi-Fi module AT parsers. |
+| Will QoS (`WillQos`) | `QoS 1` | `QoS 1` (At Least Once) guarantees SCADA/Cloud dashboards receive the fault notification. |
+| Will Retain (`WillRetain`) | `true` | `true` ensures newly opened HMI/Web dashboards immediately see whether the node is currently online or offline. |
 
 ---
 
@@ -182,6 +182,13 @@ To comply with **IEC 62443-4-2** cryptographic transport requirements, SynaptiX 
 Click **Test Connection** directly inside the `Ctrl+Shift+M` dialog before deploying to hardware. SynaptiX IDE executes a real TCP + `SslStream` X.509 handshake (including mTLS client certificate authentication and `6 s` timeout verification) from your workstation and reports the negotiated TLS version and cipher algorithm immediately!
 :::
 
+### 1.4 Automated Smart Sync During Deploy (CRC-16 Checksum Verification)
+
+To guarantee a unified engineering experience without fragmented menus, SynaptiX IDE **avoids standalone certificate download buttons**. All credential staging is fully automated within the single **Deploy (`F5`)** workflow:
+* **Hardware Checksum Verification (`0x0F43..0x0F46`):** Prior to staging, Studio reads the CRC-16 checksums of the certificates currently stored in the MCU's flash memory.
+* **Deploy Speed Optimization:** If all required certificates on the device match the local project files with 100% integrity, Studio skips chunk transmission entirely. This preserves flash write endurance and ensures routine logic deploys remain blazing fast (<100ms).
+* **Automated Provisioning:** When certificates are renewed or deployed onto a fresh device, Studio splits them into 128-byte `SPLC_CertChunk_t` structs (`0x0F00`), validates chunk ACKs (`0x0F40`), and executes an atomic commit (`0x0F42 = 0xA5A5`).
+
 ---
 
 ## Part 2: Wi-Fi Provisioning & Live Scanner (`Ctrl+Shift+W`)
@@ -192,10 +199,10 @@ For wireless-capable SynaptiX controllers and DTU gateways, press `Ctrl+Shift+W`
 
 | Setting | Default | Limit / Behavior | Engineering Recommendation |
 | :--- | :--- | :--- | :--- |
-| **Enable Wi-Fi (`IsEnabled`)** | `Disabled` | `Enabled` / `Disabled` | Activates the onboard wireless subsystem in Station (`STA`) mode. |
-| **Auto-Reconnect (`AutoReconnect`)** | `Enabled` (`true`) | Exponential backoff retry | Keep **Enabled** so the device automatically re-associates after plant AP reboots or temporary RF interference. |
-| **Network SSID (`Ssid`)** | *(Empty)* | Up to `32` UTF-8 bytes | Type manually (for hidden industrial SSIDs) or populate with one click from the **Live Access Point Scanner**. |
-| **Security Password (`Password`)** | *(Empty)* | Up to `64` ASCII chars | Supports Open, WPA-PSK, WPA2-PSK, WPA/WPA2-Mixed, and WPA3-SAE personal pre-shared keys. Includes eye-toggle visibility inspection. |
+| Enable Wi-Fi (`IsEnabled`) | `Disabled` | `Enabled` / `Disabled` | Activates the onboard wireless subsystem in Station (`STA`) mode. |
+| Auto-Reconnect (`AutoReconnect`) | `Enabled` (`true`) | Exponential backoff retry | Keep Enabled so the device automatically re-associates after plant AP reboots or temporary RF interference. |
+| Network SSID (`Ssid`) | *(Empty)* | Up to `32` UTF-8 bytes | Type manually (for hidden industrial SSIDs) or populate with one click from the Live Access Point Scanner. |
+| Security Password (`Password`) | *(Empty)* | Up to `64` ASCII chars | Supports Open, WPA-PSK, WPA2-PSK, WPA/WPA2-Mixed, and WPA3-SAE personal pre-shared keys. Includes eye-toggle visibility inspection. |
 
 ---
 
@@ -213,10 +220,10 @@ SynaptiX IDE computes normalized **Signal Quality (`0% .. 100%`)** from raw `RSS
 
 | RSSI Range (`dBm`) | Signal Quality (`%`) | RF Link Assessment & Cabinet Action |
 | :--- | :--- | :--- |
-| `>= -50 dBm` | `100%` | **Excellent:** Line-of-sight to industrial AP; ideal for high-frequency `MQTT_PUB` / `Modbus TCP`. |
-| `-65 .. -51 dBm` | `70% .. 98%` | **Good (Recommended):** Reliable production operation with ample fade margin. |
-| `-75 .. -66 dBm` | `50% .. 68%` | **Fair / Marginal:** Susceptible to packet retries near heavy VFD cabinets. Route an external SMA antenna outside metal enclosures! |
-| `<= -76 dBm` | `<= 48%` | **Weak / Unstable:** High risk of TCP/TLS handshake timeouts. Add an industrial AP repeater or switch to wired Ethernet / RS-485. |
+| `>= -50 dBm` | `100%` | Excellent: Line-of-sight to industrial AP; ideal for high-frequency `MQTT_PUB` / `Modbus TCP`. |
+| `-65 .. -51 dBm` | `70% .. 98%` | Good (Recommended): Reliable production operation with ample fade margin. |
+| `-75 .. -66 dBm` | `50% .. 68%` | Fair / Marginal: Susceptible to packet retries near heavy VFD cabinets. Route an external SMA antenna outside metal enclosures! |
+| `<= -76 dBm` | `<= 48%` | Weak / Unstable: High risk of TCP/TLS handshake timeouts. Add an industrial AP repeater or switch to wired Ethernet / RS-485. |
 
 ---
 
@@ -224,8 +231,8 @@ SynaptiX IDE computes normalized **Signal Quality (`0% .. 100%`)** from raw `RSS
 
 | IPv4 Mode | Fields Configured | When to Choose |
 | :--- | :--- | :--- |
-| **DHCP (Automatic)** *(Default)* | Automatically acquires IP, Subnet Mask, Gateway, and DNS via router DHCP lease. | Cloud-only IIoT telemetry (`MQTT_PUB`, `HTTP_CLIENT`) where outbound connections initiate from the device. |
-| **Static IPv4** | **Static IP** (`192.168.1.50`), **Subnet Mask** (`255.255.255.0`), **Default Gateway** (`192.168.1.1`), **Primary DNS** (`8.8.8.8`). | **Mandatory** whenever SCADA/HMI polls the device via **Modbus TCP (Port `502`)** or **TCP Server** mode so the device IP never drifts across DHCP renewals. |
+| DHCP (Automatic) *(Default)* | Automatically acquires IP, Subnet Mask, Gateway, and DNS via router DHCP lease. | Cloud-only IIoT telemetry (`MQTT_PUB`, `HTTP_CLIENT`) where outbound connections initiate from the device. |
+| Static IPv4 | Static IP (`192.168.1.50`), Subnet Mask (`255.255.255.0`), Default Gateway (`192.168.1.1`), Primary DNS (`8.8.8.8`). | Mandatory whenever SCADA/HMI polls the device via Modbus TCP (Port `502`) or TCP Server mode so the device IP never drifts across DHCP renewals. |
 
 While connected online (`IsDeviceConnected == true`), the dialog's **Live Telemetry Strip** refreshes every `1.5 seconds` to display:
 - **Connection Status State:** `Disconnected`, `Connecting...`, `Connected`, `Got IP`, `Authentication Failed`, or `SSID Not Found`.
