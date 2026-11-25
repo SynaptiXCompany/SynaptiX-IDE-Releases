@@ -25,7 +25,7 @@ Press `Ctrl+Shift+M` (or navigate to **Device -> MQTT Broker Configuration...**)
 | Broker Host / IP | *(Empty)* | Up to `64` ASCII chars | FQDN hostname (e.g., `a1b2c3d4-ats.iot.ap-southeast-1.amazonaws.com`, `broker.emqx.io`) or IPv4 address (e.g., `192.168.1.200`) of the target broker. |
 | Port | `1883` (`8883` w/ TLS) | `1 .. 65535` | Automatically toggles between `1883` (unencrypted TCP) and `8883` (encrypted MQTTS) when Use TLS is switched, while still allowing custom enterprise ports. |
 | Client ID | Device Serial | Up to `32` ASCII chars | Unique MQTT client identifier. Must be globally unique on the target broker to prevent disconnect-loop storms (`CONNACK` session takeover). |
-| Username / Password | *(Empty)* | Up to `32` ASCII chars each | Optional credentials for SASL/password-authenticated brokers (EMQX, HiveMQ Cloud, Mosquitto, RabbitMQ). Leave blank when using certificate-only mTLS (such as AWS IoT Core). |
+| Username / Password | *(Empty)* | Up to `32` ASCII chars each | Optional credentials for SASL/password-authenticated brokers (EMQX, HiveMQ Cloud, Mosquitto, RabbitMQ). Passwords are protected via Windows DPAPI (`CredentialProtectionService`), masked in UI, and never stored as plain-text. Leave blank when using certificate-only mTLS (such as AWS IoT Core). |
 | Keep-Alive Interval | `60 s` | `10 .. 3600 s` | Maximum idle interval before the edge device transmits a `PINGREQ` packet to hold NAT firewall state tables open and verify broker reachability. |
 | Clean Session | `Enabled` (`true`) | `true` / `false` | When `true`, starts a fresh session on reconnect. Set to `false` if you want the broker to queue `QoS 1` / `QoS 2` inbound [`MQTT_SUB`](/blocks/mqtt-sub) commands while the device is temporarily offline. |
 

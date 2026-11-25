@@ -74,6 +74,7 @@ Nằm dọc theo cạnh trên cùng của cửa sổ, Phân vùng 1 kết hợp 
   - **Biên dịch kiểm tra logic (`F7` — Compile):** Thẩm định toàn bộ dây nối, kiểu dữ liệu Tag và giới hạn tài nguyên, hạ bậc sơ đồ xuống bảng luật tất định.
   - **Triển khai nguyên tử (`Ctrl+F5` — Deploy):** Thực thi cổng kiểm tra an toàn tiền triển khai và ghi bền vững hai pha xuống bộ nhớ Flash thiết bị.
   - **Gỡ lỗi trực tuyến (`F8` — Live Debug):** Truyền trực tiếp giá trị biến và tô sáng luồng dây dẫn đang dẫn điện ở tốc độ 20 FPS ngay trên sơ đồ.
+- **Kiểm soát Năng lực Phần cứng Động (Hardware Capability Gating):** Thanh Menu `Thiết bị` và các hộp thoại cấu hình tự động thích ứng với cấu hình phần cứng mục tiêu (`Device Preset`). Nếu thiết bị đang chọn là dòng Remote I/O thuần túy (không có phần cứng mạng), toàn bộ nhóm cấu hình MQTT/Wi-Fi/Ethernet sẽ được tự động ẩn hoặc khóa an toàn, ngăn ngừa việc cấu hình nhầm các chức năng phần cứng không tồn tại.
 - **Nút Bật/Tắt AI Chatbox (`Ctrl+Space`):** Đóng/mở bảng trợ lý kỹ thuật [SynaptiX AI Copilot](/vi/tools/ai-copilot) bên cạnh phải.
 - **Chuyển đổi Ngôn ngữ Tức thời (`VI` / `EN`):** Đặt tại **Công cụ (Tools) -> Ngôn ngữ (Language)**, chuyển đổi đồng bộ 100% nhãn giao diện, chú giải và thông báo lỗi ngay lập tức không cần khởi động lại.
 
@@ -155,6 +156,19 @@ Neo dọc cạnh dưới cùng (cao `36 px`), Phân vùng 6 tích hợp nhóm n�
 ::: tip Chế độ Toàn màn hình Khi Làm việc Trên Laptop Hiện trường (`F11`)
 Nhấn phím `F11` bất kỳ lúc nào để bật/tắt chế độ Toàn màn hình (Full Screen), giúp mở rộng tối đa diện tích mặt vẽ sơ đồ và đồ thị xu hướng trên các màn hình laptop kỹ thuật kích thước gọn `1366 x 768`.
 :::
+
+---
+
+## Hệ thống Thông báo Trạng thái Nổi Công nghiệp (Industrial Toast Notifications)
+
+Bắt đầu từ phiên bản v2.15.8, SynaptiX IDE tích hợp **Hệ thống Thông báo Trạng thái Nổi (`ToastNotificationService`)** neo tại góc dưới cùng bên phải màn hình:
+- **Thông báo Không Chặn (Non-Blocking):** Cho phép kỹ sư theo dõi kết quả nạp chương trình Flash thành công, tiến trình kiểm tra bản cập nhật mới, trạng thái kết nối phần cứng và kết quả lưu dự án mà không làm gián đoạn thao tác vẽ mạch hay mở các hộp thoại modal gây phiền nhiễu.
+- **Phân loại Trạng thái theo Chuẩn ANSI/ISA-101:**
+  - **Thông tin (Info - Xanh dầu `#006487`):** Tiến trình sao lưu dự án, kiểm tra cổng truyền thông, đồng bộ đồng hồ RTC.
+  - **Thành công (Success - Xanh lục `#107C41`):** Triển khai nguyên tử thành công xuống phần cứng, kiểm tra kết nối MQTT/Modbus đạt yêu cầu.
+  - **Cảnh báo (Warning - Vàng hổ phách `#C05621`):** Pin RTC yếu, tài nguyên quy tắc đạt ngưỡng cao (>80%).
+  - **Lỗi (Error - Đỏ thẫm `#B91C1C`):** Lỗi đường truyền COM/Ethernet bị ngắt đột ngột, lỗi CRC khi nạp mã.
+- **Hàng đợi Tự đóng & Tương tác:** Mỗi thông báo tự động mờ dần và đóng sau 4–6 giây, hoặc có thể đóng nhanh bằng nút `✕`.
 
 ---
 

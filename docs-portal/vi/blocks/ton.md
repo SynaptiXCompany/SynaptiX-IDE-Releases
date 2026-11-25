@@ -22,7 +22,7 @@ Khối `TON` (**Timer On-Delay — Hẹn giờ Trễ Đóng**) trì hoãn việc
 | Chân (Pin) | Chiều | Loại Tín hiệu | Kiểu Dữ liệu | Mô tả Kỹ thuật |
 | :--- | :--- | :--- | :--- | :--- |
 | `In` | Ngõ vào (Input) | Sự kiện / Thực thi (`IsEvent = true`) | Tín hiệu Cho phép (`BOOL`) | Bắt đầu đếm thời gian khi ở mức `1` và xóa tức thì `ET` cùng `Q` về `0` ngay khi rớt xuống `0`. Nhận dây từ [`INPUT`](/vi/blocks/input), [`TRIGGER`](/vi/blocks/trigger) hoặc [`GUARD`](/vi/blocks/guard). |
-| `Q` | Ngõ ra (Output) | Giá trị / Dữ liệu (`IsEvent = false`) | `BOOL` (`0` / `1`) | Ngõ ra nhị phân trễ đóng gắn với `OutputTag`; kéo dây sang khối [`ACTION`](/vi/blocks/action), [`MQTT_PUB`](/vi/blocks/mqtt-pub), [`HTTP_CLIENT`](/vi/blocks/http-client) hoặc [`TCP_CLIENT`](/vi/blocks/tcp-client). |
+| `Q` | Ngõ ra (Output) | Giá trị / Dữ liệu (`IsEvent = false`) | `BOOL` (`0` / `1`) | Ngõ ra nhị phân trễ đóng gắn với `OutputTag`; kéo dây sang khối [`ACTION`](/vi/blocks/action), [`MQTT_PUB`](/vi/blocks/mqtt-pub), [`HTTP_CLIENT`](/vi/blocks/http-client) hoặc [`TCP_CLIENT`](/vi/blocks/tcp-client). Hỗ trợ đấu nối phân nhánh Fan-Out tới nhiều khối `ACTION` đồng thời. |
 
 ---
 

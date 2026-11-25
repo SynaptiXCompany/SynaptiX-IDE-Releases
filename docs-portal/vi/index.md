@@ -38,7 +38,7 @@ Toàn bộ tài liệu được tổ chức xuyên suốt theo **6 chương tu�
   <a class="wiki-card" href="./blocks/overview">
     <span class="wiki-card-step">CHƯƠNG 04</span>
     <h3>Từ điển Khối hàm (Blocks)</h3>
-    <p>Đặc tả kỹ thuật chuẩn datasheet (1 khối = 1 trang riêng) cho toàn bộ 18 khối hàm: Chuỗi Luật Cốt lõi, Định thời, Bộ đếm, Tuyến tính hóa SCALE, Modbus RTU, Xuất xung/DO, MQTT, HTTP và TCP.</p>
+    <p>Đặc tả kỹ thuật chuẩn datasheet (1 khối = 1 trang riêng) cho toàn bộ 20 khối hàm: Chuỗi Luật Cốt lõi, Định thời, Bộ đếm, Tuyến tính hóa SCALE, Bộ số học MATH (ALU), Modbus RTU, Xuất xung/DO, MQTT, HTTP và TCP.</p>
   </a>
   <a class="wiki-card" href="./tools/rs485-and-scada-slave">
     <span class="wiki-card-step">CHƯƠNG 05</span>

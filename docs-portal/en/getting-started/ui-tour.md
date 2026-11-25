@@ -74,6 +74,7 @@ Positioned across the top of the window, Zone 1 provides global project/device c
   - **Compile Logic (`F7`):** Validates all node connections, tag types, and capacity limits, lowering the graph into deterministic rules.
   - **Atomic Deploy (`Ctrl+F5`):** Executes pre-flight safety gates and commits compiled rules to non-volatile device flash.
   - **Online Live Debug (`F8`):** Streams real-time 20 FPS tag values and energized green wire states directly onto the canvas.
+- **Hardware Capability Gating:** The top `Device` menu and dialog configurations dynamically adapt to the active hardware target profile. When working with compact Remote I/O units lacking network interfaces, inapplicable MQTT, Wi-Fi, and Ethernet menus are automatically hidden or locked to prevent accidental configuration of non-existent hardware.
 - **SynaptiX AI Chatbox (`Ctrl+Space`):** Toggles the resizable right-hand [SynaptiX AI Copilot](/tools/ai-copilot) assistant panel.
 - **Instant Bilingual Switcher (`EN` / `VI`):** Accessible under **Tools -> Language** (`English` / `Tiếng Việt`), rebinding every label, tooltip, and validation message instantaneously without restarting.
 
@@ -155,6 +156,19 @@ Anchored across the bottom (`36 px` height), Zone 6 combines VS Code-style autho
 ::: tip Full-Screen Commissioning Mode (`F11`)
 Press `F11` at any time to toggle distraction-free Full-Screen mode, maximizing vertical canvas and trend-chart real estate on compact `1366 x 768` field laptops.
 :::
+
+---
+
+## Industrial Toast Notification System
+
+Starting in version v2.15.8, SynaptiX IDE introduces an **Industrial Toast Notification System (`ToastNotificationService`)** anchored at the lower-right corner of the workbench:
+- **Non-Blocking User Feedback:** Allows engineers to monitor deployment progress, background software update checks, transport connection status, and project save confirmations without disruptive modal message boxes interrupting active workflow.
+- **ANSI/ISA-101 Semantic Color-Coded States:**
+  - **Information (Petrol Slate `#006487`):** Project autosave, communications port verification, and RTC time synchronization.
+  - **Success (IEC Green `#107C41`):** Atomic flash deployment verified, valid MQTT/Modbus test connection established.
+  - **Warning (Amber Warning `#C05621`):** Low RTC coin-cell battery warning, rule table capacity approaching threshold (>80%).
+  - **Error (Crimson Fault `#B91C1C`):** Unexpected serial/Ethernet connection drop, deploy packet CRC mismatch.
+- **FIFO Auto-Dismissal:** Notifications automatically fade out and dismiss after 4–6 seconds, or can be dismissed immediately via the `✕` close button.
 
 ---
 

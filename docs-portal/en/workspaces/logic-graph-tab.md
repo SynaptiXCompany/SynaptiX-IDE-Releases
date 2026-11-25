@@ -141,7 +141,14 @@ Every node on the Logic Graph Canvas enforces strict visual and electrical separ
 | Orthogonal Step Wires | 90-degree industrial Manhattan routing (`IndustrialStepConnection`) with `12 px` invisible click tolerance. | Supports clicking to select, `Del` to sever, and animated color-coded state propagation during `F5` Simulation and `F8` Live Debug. |
 | Connector-Only Snapping | Pending wire cursor snaps strictly to valid target input/output pins. | Dangling mid-air wires are automatically discarded upon mouse release, preserving schematic integrity. |
 
-### 2.3. Canvas Navigation, Editing & Multi-Node Alignment Shortcuts
+### 2.3. Multi-Action Fan-Out Wiring
+
+Starting in version v2.15.11, the Logic Graph Canvas natively supports **Multi-Action Fan-Out Wiring** directly from stateful macro blocks and arithmetic calculation nodes:
+- **Parallel Fan-Out Dragging:** From a single output pin (such as output `Q` on `TON`, `TOF`, `TP`, `CYCLE` timers, output `Q` on `CTU`, `CTD` counters, or output `Out` on `SCALE` and `MATH` blocks), engineers can draw multiple parallel wires into distinct downstream `ACTION` blocks (e.g., upon timer expiration, simultaneously energize contactor `DO0 = 1`, trigger alarm siren `DO1 = 1`, and set status flag `VFLAG0 = 1`).
+- **Automated Macro Lowering:** The rule compiler assigns the first connected action as the primary timekeeper reference (`primaryQTag`), and automatically duplicates and synchronizes paired ON/OFF rules across all downstream branches without requiring intermediate multiplexer blocks.
+- **Controlled Multi-Writer Group Validation:** The compiler's `WriteConflictValidator` automatically recognizes synchronized multi-action pairs stemming from the same macro instance, preventing false-positive `ErrConflictingWriters` compiler errors while continuing to safeguard against unauthorized external writes.
+
+### 2.4. Canvas Navigation, Editing & Multi-Node Alignment Shortcuts
 
 To keep multi-branch industrial control sheets readable during plant audits, SynaptiX IDE provides full CAD-grade keyboard accelerators:
 

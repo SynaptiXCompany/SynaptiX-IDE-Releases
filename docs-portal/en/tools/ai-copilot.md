@@ -15,9 +15,14 @@
 
 ## 1. Initial Setup & Workspace Context Awareness
 
-### 1.1 API Key & Model Configuration
+### 1.1 API Key, Multi-Provider Architecture & Credential Protection
 1. Press `Ctrl+Space` to open the **SynaptiX AI** panel and click the **[Settings]** gear button in the panel header.
-2. Enter your **Gemini API Key**, choose a low-latency model (`gemini-3.8-flash` default, `gemini-3.7-flash`, or `gemini-3.6-flash`), and click **Save Settings**. Credentials are stored locally in your user profile—never embedded into shared project files.
+2. **Provider Selection:**
+   - **Google Gemini:** Choose low-latency models (`gemini-3.8-flash` default, `gemini-3.7-flash`, or `gemini-3.6-flash`).
+   - **OpenAI & Compatible Endpoints:** Native support for `OpenAI (GPT-4o, GPT-4o-mini)`, `Azure OpenAI`, or local OpenAI-compatible inference servers (Ollama, vLLM, LMStudio) for air-gapped industrial facilities.
+3. **Hardware-Backed Credential Protection (Windows DPAPI):**
+   - API keys and connection credentials are automatically encrypted via Windows DPAPI (`CredentialProtectionService`) with `CurrentUser` scope.
+   - Secrets are masked on the UI and never leaked to diagnostics logs or embedded into shared `.splc` project files.
 
 ### 1.2 Live Project Context Bar & Suggestion Chips
 Unlike generic web chatbots that have no visibility into your hardware I/O layout, SynaptiX AI Copilot continuously inspects your live workspace context:
@@ -126,9 +131,30 @@ Unlike generic web chatbots that have no visibility into your hardware I/O layou
 | :--- | :--- |
 | Tag Catalog Provisioning | Allocates unused `DI`, `DO`, `AI`, `VFLAG`, `VREG`, or `VREG_RETAIN` slots, enforces `BOOL` / `INT32` / `REAL` physical types, and populates descriptive aliases and units. |
 | Interlocked Control Loops | Builds complete `INPUT -> TRIGGER -> COMPARATOR -> GUARD -> ACTION` chains with proper `Set` / `Reset` latching and E-Stop permissive gating. |
-| Timing, Counting & Scaling | Wires [`TON`](/blocks/ton) debounce delays, [`TOF`](/blocks/tof) cooling overruns, [`TP`](/blocks/tp) fixed pulses, [`CTU`](/blocks/ctu) batch counters, and [`SCALE`](/blocks/scale) `4..20 mA` two-point linearizers. |
-| RS-485 & IIoT Telemetry | Generates [`MB_READ`](/blocks/mb-read) register polling pins, [`MQTT_PUB`](/blocks/mqtt-pub) multi-field JSON builders, and [`MQTT_SUB`](/blocks/mqtt-sub) inbound command decoders. |
+| Timing, Counting, Scaling & Math | Wires [`TON`](/blocks/ton) debounce delays, [`TOF`](/blocks/tof) cooling overruns, [`TP`](/blocks/tp) fixed pulses, [`CTU`](/blocks/ctu) batch counters, [`SCALE`](/blocks/scale) two-point linearizers, and [`MATH`](/blocks/math) arithmetic ALU blocks. Supports multi-branch Fan-Out wiring to multiple Action targets. |
+| RS-485 & Direct Hardware Actuation | Generates [`MB_READ`](/blocks/mb-read) polling, [`MB_WRITE`](/blocks/mb-write) registers, and [`DIRECT_WRITE`](/blocks/direct-write) high-speed GPIO/PWM pins aligned with physical field devices. |
+| IIoT Edge Telemetry & MQTT | Generates [`MQTT_PUB`](/blocks/mqtt-pub) multi-field JSON builders and [`MQTT_SUB`](/blocks/mqtt-sub) command decoders with automated topic, QoS, and schema extraction. |
 | Compiler Error Remediation | Explains structural grammar or write-conflict diagnostics in plain language and proposes corrected wiring. |
+
+### 2.1 Industrial Peripheral Intelligence (`PeripheralTemplateRegistry`)
+Rather than hallucinating registers, Copilot accesses a built-in repository of verified industrial device templates via `PeripheralTemplateRegistry`:
+- **Smart Energy Meters:** Maps 3-phase Voltage ($V$), Current ($A$), Active Power ($kW$), Power Factor ($PF$), and Energy Accumulators ($kWh$) for Schneider, Selec, and Acrel meters.
+- **Variable Frequency Drives (VFD):** Wires standardized Control Words, Frequency References, Output Currents, and Fault Feedback registers for Delta, INVT, Yaskawa, and Danfoss inverters.
+- **Transmitters & Environmental Sensors:** Pre-engineered templates for RTD/PT100 temperature probes, relative humidity, pressure transducers, and standard `4..20 mA` / `0..10 V` analog conversions.
+
+### 2.2 5 Industrial Architecture Archetypes
+Copilot automatically structures user requirements into industry-proven design patterns:
+1. **State Machine / Sequence:** Sequences multi-step processes (`Step 1` $\rightarrow$ `Step 2` $\rightarrow$ `Step N`) with step-transition flags (`VFLAG`) and status registers (`VREG`).
+2. **Safety Interlock & Alarm:** Enforces fail-safe E-Stop circuits, high-limit overrides, thermal overloads, and alarms with latching mechanisms.
+3. **Analog Regulation:** Pairs analog inputs (`AI`), linear scalers (`SCALE`), arithmetic operations (`MATH`), and dual-threshold comparators with hysteresis to prevent relay chattering.
+4. **Edge Telemetry Ingestion:** Optimizes Modbus polling intervals and groups contiguous registers into compact JSON payloads for bandwidth-efficient MQTT transmission.
+5. **Recipe & Batch Execution:** Binds critical production parameters to non-volatile retain registers (`VREG_RETAIN`) that persist across power cycles.
+
+### 2.3 Draft Graph Transactions
+All synthesis proposals are staged inside an isolated **Draft Graph Transaction**:
+- Staged logic is validated against the active hardware profile before touching the canvas.
+- Engineers can review a visual diff preview before accepting changes.
+- Applying proposals creates a single atomic history state—press `Ctrl+Z` to rollback anytime.
 
 ---
 

@@ -2745,9 +2745,9 @@ In two's complement integer hardware, every bit weight represents an exact power
 </div></div>
 <h3 class="subsection-title">Installing &amp; Launching SynaptiX IDE</h3>
 <h4>1. Step-by-Step Graphical Setup Wizard (Recommended)</h4>
-<p>The official distribution package <code>SynaptiX_IDE_Setup_v2.15.0.exe</code> is engineered with Inno Setup 6 and LZMA2 ultra solid compression, providing a complete workstation setup in under 30 seconds:</p>
+<p>The official distribution package <code>SynaptiX_IDE_Setup_v2.15.11.exe</code> is engineered with Inno Setup 6 and LZMA2 ultra solid compression, providing a complete workstation setup in under 30 seconds:</p>
 <h5>Step 1: Launch Installer &amp; Welcome Screen</h5>
-<p>Download <code>SynaptiX_IDE_Setup_v2.15.0.exe</code> from your enterprise portal or the official <a href="https://synaptix-io.com/downloads">synaptix-io.com</a> release portal. Double-click the installer and accept the Windows User Account Control (UAC) prompt. The Welcome screen displays the software version:</p>
+<p>Download <code>SynaptiX_IDE_Setup_v2.15.11.exe</code> from your enterprise portal, the official <a href="https://synaptix-io.com/downloads">synaptix-io.com</a> release portal, or <a href="https://github.com/SynaptiXCompany/SynaptiX-IDE-Releases/releases/latest">GitHub Releases</a>. Double-click the installer and accept the Windows User Account Control (UAC) prompt. The Welcome screen displays the software version:</p>
 <p><img src="file:///G:/HoaNV/Projects/SimplePLC/docs-portal/public/images/synaptix_setup_step1_welcome.png" alt="SynaptiX IDE Setup Wizard Welcome Screen" /></p>
 <p>Click <strong>Next &gt;</strong> to proceed.</p>
 <h5>Step 2: Accept the End-User License Agreement (EULA)</h5>
@@ -2777,10 +2777,10 @@ In two's complement integer hardware, every bit weight represents an exact power
 <h4>2. Unattended Silent Enterprise Rollout</h4>
 <p>For OT/IT systems engineers conducting bulk mass deployments across dozens of industrial SCADA or operator workstations via Active Directory GPO, InTune, or SCCM, the installer provides silent command-line flags:</p>
 <pre><code class="language-powershell"># Completely unattended silent setup with no popups or system restarts
-.\SynaptiX_IDE_Setup_v2.15.0.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG=&quot;synaptix_install.log&quot;
+.\SynaptiX_IDE_Setup_v2.15.11.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG=&quot;synaptix_install.log&quot;
 
 # Custom target installation directory
-.\SynaptiX_IDE_Setup_v2.15.0.exe /VERYSILENT /DIR=&quot;&lt;TargetDirectory&gt;\SynaptixIDE&quot;
+.\SynaptiX_IDE_Setup_v2.15.11.exe /VERYSILENT /DIR=&quot;&lt;TargetDirectory&gt;\SynaptixIDE&quot;
 
 # Unattended clean uninstallation
 &quot;%ProgramFiles%\Synaptix Automation\SynaptiX IDE\unins000.exe&quot; /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
@@ -2948,6 +2948,7 @@ In two's complement integer hardware, every bit weight represents an exact power
 <li><strong>Online Live Debug (<code>F8</code>):</strong> Streams real-time 20 FPS tag values and energized green wire states directly onto the canvas.</li>
 </ul>
 </li>
+<li><strong>Hardware Capability Gating:</strong> The top <code>Device</code> menu and dialog configurations dynamically adapt to the active hardware target profile. When working with compact Remote I/O units lacking network interfaces, inapplicable MQTT, Wi-Fi, and Ethernet menus are automatically hidden or locked to prevent accidental configuration of non-existent hardware.</li>
 <li><strong>SynaptiX AI Chatbox (<code>Ctrl+Space</code>):</strong> Toggles the resizable right-hand <a href="/tools/ai-copilot">SynaptiX AI Copilot</a> assistant panel.</li>
 <li><strong>Instant Bilingual Switcher (<code>EN</code> / <code>VI</code>):</strong> Accessible under <strong>Tools -&gt; Language</strong> (<code>English</code> / <code>Tiếng Việt</code>), rebinding every label, tooltip, and validation message instantaneously without restarting.</li>
 </ul>
@@ -3069,6 +3070,20 @@ In two's complement integer hardware, every bit weight represents an exact power
 <div class="callout callout-tip"><div class="callout-header"><span class="callout-prefix">[ Full-Screen Commissioning Mode (`F11`) ]</span></div><div class="callout-body">
 <p>Press <code>F11</code> at any time to toggle distraction-free Full-Screen mode, maximizing vertical canvas and trend-chart real estate on compact <code>1366 x 768</code> field laptops.</p>
 </div></div>
+<h3 class="subsection-title">Industrial Toast Notification System</h3>
+<p>Starting in version v2.15.8, SynaptiX IDE introduces an <strong>Industrial Toast Notification System (<code>ToastNotificationService</code>)</strong> anchored at the lower-right corner of the workbench:</p>
+<ul>
+<li><strong>Non-Blocking User Feedback:</strong> Allows engineers to monitor deployment progress, background software update checks, transport connection status, and project save confirmations without disruptive modal message boxes interrupting active workflow.</li>
+<li><strong>ANSI/ISA-101 Semantic Color-Coded States:</strong>
+<ul>
+<li><strong>Information (Petrol Slate <code>#006487</code>):</strong> Project autosave, communications port verification, and RTC time synchronization.</li>
+<li><strong>Success (IEC Green <code>#107C41</code>):</strong> Atomic flash deployment verified, valid MQTT/Modbus test connection established.</li>
+<li><strong>Warning (Amber Warning <code>#C05621</code>):</strong> Low RTC coin-cell battery warning, rule table capacity approaching threshold (&gt;80%).</li>
+<li><strong>Error (Crimson Fault <code>#B91C1C</code>):</strong> Unexpected serial/Ethernet connection drop, deploy packet CRC mismatch.</li>
+</ul>
+</li>
+<li><strong>FIFO Auto-Dismissal:</strong> Notifications automatically fade out and dismiss after 4–6 seconds, or can be dismissed immediately via the <code>[x]</code> close button.</li>
+</ul>
 <h3 class="subsection-title">Next Steps</h3>
 <ul>
 <li><a href="/getting-started/quickstart-first-project">10-Minute First Project</a> — Put all six zones into practice by building, simulating, deploying, and trending your first control loop.</li>
@@ -3785,7 +3800,14 @@ In two's complement integer hardware, every bit weight represents an exact power
 </tr>
 </tbody>
 </table>
-<h4>2.3. Canvas Navigation, Editing &amp; Multi-Node Alignment Shortcuts</h4>
+<h4>2.3. Multi-Action Fan-Out Wiring</h4>
+<p>Starting in version v2.15.11, the Logic Graph Canvas natively supports <strong>Multi-Action Fan-Out Wiring</strong> directly from stateful macro blocks and arithmetic calculation nodes:</p>
+<ul>
+<li><strong>Parallel Fan-Out Dragging:</strong> From a single output pin (such as output <code>Q</code> on <code>TON</code>, <code>TOF</code>, <code>TP</code>, <code>CYCLE</code> timers, output <code>Q</code> on <code>CTU</code>, <code>CTD</code> counters, or output <code>Out</code> on <code>SCALE</code> and <code>MATH</code> blocks), engineers can draw multiple parallel wires into distinct downstream <code>ACTION</code> blocks (e.g., upon timer expiration, simultaneously energize contactor <code>DO0 = 1</code>, trigger alarm siren <code>DO1 = 1</code>, and set status flag <code>VFLAG0 = 1</code>).</li>
+<li><strong>Automated Macro Lowering:</strong> The rule compiler assigns the first connected action as the primary timekeeper reference (<code>primaryQTag</code>), and automatically duplicates and synchronizes paired ON/OFF rules across all downstream branches without requiring intermediate multiplexer blocks.</li>
+<li><strong>Controlled Multi-Writer Group Validation:</strong> The compiler's <code>WriteConflictValidator</code> automatically recognizes synchronized multi-action pairs stemming from the same macro instance, preventing false-positive <code>ErrConflictingWriters</code> compiler errors while continuing to safeguard against unauthorized external writes.</li>
+</ul>
+<h4>2.4. Canvas Navigation, Editing &amp; Multi-Node Alignment Shortcuts</h4>
 <p>To keep multi-branch industrial control sheets readable during plant audits, SynaptiX IDE provides full CAD-grade keyboard accelerators:</p>
 <table>
 <thead>
@@ -7125,7 +7147,7 @@ In two's complement integer hardware, every bit weight represents an exact power
 <td style="text-align:left">Output</td>
 <td style="text-align:left">Value / Data (<code>IsEvent = false</code>)</td>
 <td style="text-align:left"><code>BOOL</code> (<code>0</code> / <code>1</code>)</td>
-<td style="text-align:left">Delayed boolean output bound to <code>OutputTag</code>; drives downstream <a href="/blocks/action"><code>ACTION</code></a>, <a href="/blocks/mqtt-pub"><code>MQTT_PUB</code></a>, <a href="/blocks/http-client"><code>HTTP_CLIENT</code></a>, or <a href="/blocks/tcp-client"><code>TCP_CLIENT</code></a> blocks.</td>
+<td style="text-align:left">Delayed boolean output bound to <code>OutputTag</code>; drives downstream <a href="/blocks/action"><code>ACTION</code></a>, <a href="/blocks/mqtt-pub"><code>MQTT_PUB</code></a>, <a href="/blocks/http-client"><code>HTTP_CLIENT</code></a>, or <a href="/blocks/tcp-client"><code>TCP_CLIENT</code></a> blocks. Supports multi-action Fan-Out wiring directly to multiple <code>ACTION</code> targets.</td>
 </tr>
 </tbody>
 </table>
@@ -11118,7 +11140,7 @@ The <code>MATH</code> block performs algebraic subtraction to derive the net mat
 <td style="text-align:left">Username / Password</td>
 <td style="text-align:left"><em>(Empty)</em></td>
 <td style="text-align:left">Up to <code>32</code> ASCII chars each</td>
-<td style="text-align:left">Optional credentials for SASL/password-authenticated brokers (EMQX, HiveMQ Cloud, Mosquitto, RabbitMQ). Leave blank when using certificate-only mTLS (such as AWS IoT Core).</td>
+<td style="text-align:left">Optional credentials for SASL/password-authenticated brokers (EMQX, HiveMQ Cloud, Mosquitto, RabbitMQ). Passwords are protected via Windows DPAPI (<code>CredentialProtectionService</code>), masked in UI, and never stored as plain-text. Leave blank when using certificate-only mTLS (such as AWS IoT Core).</td>
 </tr>
 <tr>
 <td style="text-align:left">Keep-Alive Interval</td>
@@ -11875,10 +11897,21 @@ The <code>MATH</code> block performs algebraic subtraction to derive the net mat
         <p><strong>SynaptiX AI Copilot</strong> is an integrated industrial engineering assistant docked inside SynaptiX IDE. Press <code>Ctrl+Space</code> from any workspace to slide open the 380 px Copilot side panel, describe your automation requirement in plain English or Vietnamese, and let Copilot synthesize typed tags, 4-stage control rules, IEC timers/counters, linear calibrators, RS-485 Modbus pollers, and MQTT JSON telemetry pipelines directly onto your project.</p>
 <p><img src="file:///G:/HoaNV/Projects/SimplePLC/docs-portal/public/images/synaptix_ai_copilot.png" alt="SynaptiX AI Copilot Side Panel &amp; Graph Synthesis" /></p>
 <h3 class="subsection-title">1. Initial Setup &amp; Workspace Context Awareness</h3>
-<h4>1.1 API Key &amp; Model Configuration</h4>
+<h4>1.1 API Key, Multi-Provider Architecture &amp; Credential Protection</h4>
 <ol>
 <li>Press <code>Ctrl+Space</code> to open the <strong>SynaptiX AI</strong> panel and click the <strong>[Settings]</strong> gear button in the panel header.</li>
-<li>Enter your <strong>Gemini API Key</strong>, choose a low-latency model (<code>gemini-3.8-flash</code> default, <code>gemini-3.7-flash</code>, or <code>gemini-3.6-flash</code>), and click <strong>Save Settings</strong>. Credentials are stored locally in your user profile—never embedded into shared project files.</li>
+<li><strong>Provider Selection:</strong>
+<ul>
+<li><strong>Google Gemini:</strong> Choose low-latency models (<code>gemini-3.8-flash</code> default, <code>gemini-3.7-flash</code>, or <code>gemini-3.6-flash</code>).</li>
+<li><strong>OpenAI &amp; Compatible Endpoints:</strong> Native support for <code>OpenAI (GPT-4o, GPT-4o-mini)</code>, <code>Azure OpenAI</code>, or local OpenAI-compatible inference servers (Ollama, vLLM, LMStudio) for air-gapped industrial facilities.</li>
+</ul>
+</li>
+<li><strong>Hardware-Backed Credential Protection (Windows DPAPI):</strong>
+<ul>
+<li>API keys and connection credentials are automatically encrypted via Windows DPAPI (<code>CredentialProtectionService</code>) with <code>CurrentUser</code> scope.</li>
+<li>Secrets are masked on the UI and never leaked to diagnostics logs or embedded into shared <code>.splc</code> project files.</li>
+</ul>
+</li>
 </ol>
 <h4>1.2 Live Project Context Bar &amp; Suggestion Chips</h4>
 <p>Unlike generic web chatbots that have no visibility into your hardware I/O layout, SynaptiX AI Copilot continuously inspects your live workspace context:</p>
@@ -11991,12 +12024,16 @@ The <code>MATH</code> block performs algebraic subtraction to derive the net mat
 <td style="text-align:left">Builds complete <code>INPUT -&gt; TRIGGER -&gt; COMPARATOR -&gt; GUARD -&gt; ACTION</code> chains with proper <code>Set</code> / <code>Reset</code> latching and E-Stop permissive gating.</td>
 </tr>
 <tr>
-<td style="text-align:left">Timing, Counting &amp; Scaling</td>
-<td style="text-align:left">Wires <a href="/blocks/ton"><code>TON</code></a> debounce delays, <a href="/blocks/tof"><code>TOF</code></a> cooling overruns, <a href="/blocks/tp"><code>TP</code></a> fixed pulses, <a href="/blocks/ctu"><code>CTU</code></a> batch counters, and <a href="/blocks/scale"><code>SCALE</code></a> <code>4..20 mA</code> two-point linearizers.</td>
+<td style="text-align:left">Timing, Counting, Scaling &amp; Math</td>
+<td style="text-align:left">Wires <a href="/blocks/ton"><code>TON</code></a> debounce delays, <a href="/blocks/tof"><code>TOF</code></a> cooling overruns, <a href="/blocks/tp"><code>TP</code></a> fixed pulses, <a href="/blocks/ctu"><code>CTU</code></a> batch counters, <a href="/blocks/scale"><code>SCALE</code></a> two-point linearizers, and <a href="/blocks/math"><code>MATH</code></a> arithmetic ALU blocks. Supports multi-branch Fan-Out wiring to multiple Action targets.</td>
 </tr>
 <tr>
-<td style="text-align:left">RS-485 &amp; IIoT Telemetry</td>
-<td style="text-align:left">Generates <a href="/blocks/mb-read"><code>MB_READ</code></a> register polling pins, <a href="/blocks/mqtt-pub"><code>MQTT_PUB</code></a> multi-field JSON builders, and <a href="/blocks/mqtt-sub"><code>MQTT_SUB</code></a> inbound command decoders.</td>
+<td style="text-align:left">RS-485 &amp; Direct Hardware Actuation</td>
+<td style="text-align:left">Generates <a href="/blocks/mb-read"><code>MB_READ</code></a> polling, <a href="/blocks/mb-write"><code>MB_WRITE</code></a> registers, and <a href="/blocks/direct-write"><code>DIRECT_WRITE</code></a> high-speed GPIO/PWM pins aligned with physical field devices.</td>
+</tr>
+<tr>
+<td style="text-align:left">IIoT Edge Telemetry &amp; MQTT</td>
+<td style="text-align:left">Generates <a href="/blocks/mqtt-pub"><code>MQTT_PUB</code></a> multi-field JSON builders and <a href="/blocks/mqtt-sub"><code>MQTT_SUB</code></a> command decoders with automated topic, QoS, and schema extraction.</td>
 </tr>
 <tr>
 <td style="text-align:left">Compiler Error Remediation</td>
@@ -12004,6 +12041,29 @@ The <code>MATH</code> block performs algebraic subtraction to derive the net mat
 </tr>
 </tbody>
 </table>
+<h4>2.1 Industrial Peripheral Intelligence (<code>PeripheralTemplateRegistry</code>)</h4>
+<p>Rather than hallucinating registers, Copilot accesses a built-in repository of verified industrial device templates via <code>PeripheralTemplateRegistry</code>:</p>
+<ul>
+<li><strong>Smart Energy Meters:</strong> Maps 3-phase Voltage ($V$), Current ($A$), Active Power ($kW$), Power Factor ($PF$), and Energy Accumulators ($kWh$) for Schneider, Selec, and Acrel meters.</li>
+<li><strong>Variable Frequency Drives (VFD):</strong> Wires standardized Control Words, Frequency References, Output Currents, and Fault Feedback registers for Delta, INVT, Yaskawa, and Danfoss inverters.</li>
+<li><strong>Transmitters &amp; Environmental Sensors:</strong> Pre-engineered templates for RTD/PT100 temperature probes, relative humidity, pressure transducers, and standard <code>4..20 mA</code> / <code>0..10 V</code> analog conversions.</li>
+</ul>
+<h4>2.2 5 Industrial Architecture Archetypes</h4>
+<p>Copilot automatically structures user requirements into industry-proven design patterns:</p>
+<ol>
+<li><strong>State Machine / Sequence:</strong> Sequences multi-step processes (<code>Step 1</code> $\rightarrow$ <code>Step 2</code> $\rightarrow$ <code>Step N</code>) with step-transition flags (<code>VFLAG</code>) and status registers (<code>VREG</code>).</li>
+<li><strong>Safety Interlock &amp; Alarm:</strong> Enforces fail-safe E-Stop circuits, high-limit overrides, thermal overloads, and alarms with latching mechanisms.</li>
+<li><strong>Analog Regulation:</strong> Pairs analog inputs (<code>AI</code>), linear scalers (<code>SCALE</code>), arithmetic operations (<code>MATH</code>), and dual-threshold comparators with hysteresis to prevent relay chattering.</li>
+<li><strong>Edge Telemetry Ingestion:</strong> Optimizes Modbus polling intervals and groups contiguous registers into compact JSON payloads for bandwidth-efficient MQTT transmission.</li>
+<li><strong>Recipe &amp; Batch Execution:</strong> Binds critical production parameters to non-volatile retain registers (<code>VREG_RETAIN</code>) that persist across power cycles.</li>
+</ol>
+<h4>2.3 Draft Graph Transactions</h4>
+<p>All synthesis proposals are staged inside an isolated <strong>Draft Graph Transaction</strong>:</p>
+<ul>
+<li>Staged logic is validated against the active hardware profile before touching the canvas.</li>
+<li>Engineers can review a visual diff preview before accepting changes.</li>
+<li>Applying proposals creates a single atomic history state—press <code>Ctrl+Z</code> to rollback anytime.</li>
+</ul>
 <h3 class="subsection-title">3. Industrial Prompt Engineering Patterns</h3>
 <p>Ambiguous prompts produce generic logic. Writing structured engineering prompts that state <strong>1) Tag Pins &amp; Types</strong>, <strong>2) Engineering Units &amp; Thresholds</strong>, <strong>3) Hysteresis / Dwell Timing</strong>, and <strong>4) E-Stop / Fault Interlocks</strong> yields production-grade schematics on the first pass:</p>
 <table>
@@ -12945,6 +13005,12 @@ The <code>MATH</code> block performs algebraic subtraction to derive the net mat
 <td style="text-align:left"><code>Ctrl+Shift+G</code></td>
 <td style="text-align:left">Snap All Nodes to Grid</td>
 <td style="text-align:left">Quantizes all node coordinates onto the crisp <code>20 px</code> schematic grid.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Ctrl+Alt+G</code></td>
+<td style="text-align:left">—</td>
+<td style="text-align:left">Toggle Alignment Grid</td>
+<td style="text-align:left">Toggles display of the crisp <code>20 px</code> engineering coordinate grid.</td>
 </tr>
 </tbody>
 </table>

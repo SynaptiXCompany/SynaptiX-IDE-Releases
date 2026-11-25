@@ -15,9 +15,14 @@
 
 ## 1. Thiết lập Ban đầu & Nhận thức Ngữ cảnh Dự án
 
-### 1.1 Cấu hình Khóa API & Mô hình AI
+### 1.1 Cấu hình Khóa API, Nhà cung cấp Đa nền tảng & Bảo vệ Thông tin Xác thực
 1. Nhấn `Ctrl+Space` để mở bảng **SynaptiX AI**, sau đó nhấp vào nút bánh răng **[Cài đặt]** ở góc trên.
-2. Nhập **Gemini API Key**, chọn mô hình phản hồi tốc độ cao (`gemini-3.8-flash` mặc định, `gemini-3.7-flash` hoặc `gemini-3.6-flash`), và nhấn **Lưu cài đặt**. Khóa bảo mật chỉ lưu cục bộ trên máy trạm của kỹ sư, tuyệt đối không bị đính kèm vào tệp dự án khi chia sẻ.
+2. **Lựa chọn Nhà cung cấp AI (Provider):**
+   - **Google Gemini:** Chọn mô hình phản hồi tốc độ cao (`gemini-3.8-flash` mặc định, `gemini-3.7-flash` hoặc `gemini-3.6-flash`).
+   - **OpenAI & Mô hình Cục bộ tương thích:** Hỗ trợ kết nối với `OpenAI (GPT-4o, GPT-4o-mini)`, `Azure OpenAI` hoặc các máy chủ mô hình cục bộ chuẩn OpenAI endpoint (Ollama, vLLM, LMStudio) phục vụ các nhà máy có yêu cầu cô lập mạng tuyệt đối.
+3. **Bảo vệ Thông tin Xác thực bằng DPAPI (Credential Protection):**
+   - Khóa API và mật khẩu kết nối được bảo vệ bởi dịch vụ mã hóa Windows DPAPI (`CredentialProtectionService`) với phạm vi `CurrentUser`.
+   - Thông tin nhạy cảm luôn được che giấu (`masked`) trên giao diện, không bao giờ xuất hiện trong file log hay bị lưu đính kèm vào tệp dự án `.splc` khi chia sẻ ra ngoài.
 
 ### 1.2 Thanh Ngữ cảnh Trực tiếp & Chip Gợi ý Thông minh
 Khác biệt hoàn toàn với các công cụ hỏi đáp AI rời rạc trên trình duyệt không hề biết cấu hình phần cứng của bạn, SynaptiX AI Copilot đọc trực tiếp ngữ cảnh dự án thời gian thực:
@@ -126,9 +131,30 @@ Khác biệt hoàn toàn với các công cụ hỏi đáp AI rời rạc trên 
 | :--- | :--- |
 | Quy hoạch Danh mục Biến | Cấp phát các ô nhớ `DI`, `DO`, `AI`, `VFLAG`, `VREG` hoặc `VREG_RETAIN` còn trống, gán chuẩn kiểu vật lý `BOOL` / `INT32` / `REAL` kèm tên gợi nhớ (`Alias`) và đơn vị đo. |
 | Mạch Khóa Liên động Chuẩn | Xây dựng trọn vẹn đường ống `INPUT -> TRIGGER -> COMPARATOR -> GUARD -> ACTION` với cơ chế tự giữ `Set` / `Reset` và cổng khóa an toàn dừng khẩn cấp E-Stop. |
-| Định thời, Đếm & Quy đổi | Nối dây bộ trễ đóng [`TON`](/vi/blocks/ton), trễ ngắt quạt làm mát [`TOF`](/vi/blocks/tof), phát xung [`TP`](/vi/blocks/tp), đếm sản phẩm [`CTU`](/vi/blocks/ctu) và tuyến tính hóa cảm biến `4..20 mA` bằng [`SCALE`](/vi/blocks/scale). |
-| Truyền thông RS-485 & IIoT | Khởi tạo khối đọc [`MB_READ`](/vi/blocks/mb-read), khối đóng gói JSON đa biến [`MQTT_PUB`](/vi/blocks/mqtt-pub) và khối nhận lệnh điều khiển [`MQTT_SUB`](/vi/blocks/mqtt-sub). |
+| Định thời, Đếm, Quy đổi & Toán học | Nối dây bộ trễ đóng [`TON`](/vi/blocks/ton), trễ ngắt [`TOF`](/vi/blocks/tof), phát xung [`TP`](/vi/blocks/tp), đếm sản phẩm [`CTU`](/vi/blocks/ctu), tuyến tính hóa [`SCALE`](/vi/blocks/scale) và bộ số học ALU [`MATH`](/vi/blocks/math). Hỗ trợ kéo dây đa ngõ ra Fan-Out tới nhiều Action đồng thời. |
+| Truyền thông RS-485 & Ngoại vi | Khởi tạo khối đọc [`MB_READ`](/vi/blocks/mb-read), ghi [`MB_WRITE`](/vi/blocks/mb-write), khối xuất xung cọc cứng [`DIRECT_WRITE`](/vi/blocks/direct-write) với thông số thanh ghi Modbus chuẩn theo thiết bị ngoại vi thực tế. |
+| Điện toán Biên IIoT & MQTT | Khởi tạo khối đóng gói JSON đa biến [`MQTT_PUB`](/vi/blocks/mqtt-pub) và khối nhận lệnh điều khiển [`MQTT_SUB`](/vi/blocks/mqtt-sub) kèm cấu hình topic, QoS và trích xuất trường tự động. |
 | Chẩn đoán & Sửa lỗi Biên dịch | Phân tích nguyên nhân lỗi ngữ pháp sơ đồ hoặc lỗi xung đột ghi trùng biến và đề xuất phương án đấu dây chuẩn xác. |
+
+### 2.1 Trí tuệ Ngoại vi Công nghiệp (`Peripheral Intelligence`)
+Khác với việc phỏng đoán thanh ghi thông thường, Copilot được tích hợp **Bộ Đăng ký Bản mẫu Ngoại vi (`PeripheralTemplateRegistry`)** chứa cơ sở tri thức phần cứng chuẩn công nghiệp:
+- **Đồng hồ Đo Điện năng Thông minh (Smart Energy Meters):** Tự động điền đúng địa chỉ thanh ghi Modbus RTU cho Điện áp pha ($V$), Dòng điện ($A$), Công suất hoạt động ($kW$), Hệ số công suất ($cos\phi$) và Điện năng tiêu thụ ($kWh$) từ các dòng Schneider, Selec, Acrel.
+- **Biến tần & Khởi động mềm (VFD / Inverters):** Cấu hình chuẩn thanh ghi Lệnh chạy/dừng (`Control Word`), Tần số đặt (`Frequency Reference`), Tần số phản hồi, Dòng điện động cơ và Mã lỗi từ các dòng Delta, INVT, Yaskawa, Danfoss.
+- **Cảm biến Môi trường & Khí tượng:** Bản mẫu trích xuất nhiệt độ RTD/PT100, độ ẩm, áp suất đường ống qua chuẩn Modbus hoặc bộ chuyển đổi tín hiệu tương tự `4..20 mA`.
+
+### 2.2 5 Hình mẫu Kiến trúc Công nghiệp (5 Industrial Archetypes)
+Khi phân tích yêu cầu từ người dùng, Copilot tự động nhận diện và áp dụng cấu trúc phù hợp nhất:
+1. **Chu trình Tuần tự / Máy trạng thái (State Machine):** Tự động phân rã thành các bước kế tiếp (`Step 1` $\rightarrow$ `Step 2` $\rightarrow$ `Step N`) sử dụng cờ nhớ `VFLAG` hoặc thanh ghi trạng thái `VREG`.
+2. **Khóa Liên động & Cảnh báo An toàn (Safety Interlock & Alarm):** Ưu tiên các điều kiện dừng khẩn cấp E-Stop, áp suất tới hạn, quá nhiệt rơ-le và duy trì trạng thái ngắt an toàn Fail-Safe.
+3. **Điều tiết Tương tự & Tuyến tính (Analog Regulation):** Kết hợp khối đo lường `AI`, chuẩn hóa `SCALE`, khối tính toán `MATH` và khối so sánh ngưỡng có vùng trễ (Hysteresis) để chống dao động bật/tắt liên tục.
+4. **Thu thập & Đẩy Dữ liệu Biên (Edge Telemetry Ingestion):** Tối ưu hóa chu kỳ quét Modbus, gom nhóm thanh ghi liên tục và ánh xạ vào bản tin JSON MQTT gọn nhẹ tiết kiệm băng thông.
+5. **Mẻ Sản xuất & Quản lý Công thức (Recipe & Batch Execution):** Quản lý các tham số mẻ trên vùng nhớ Flash lưu giữ bền vững `VREG_RETAIN` không mất dữ liệu khi mất nguồn.
+
+### 2.3 Cơ chế Giao dịch Bản vẽ Nháp (Draft Graph Transactions)
+Mọi đề xuất chỉnh sửa hoặc sinh mới từ Copilot đều được bao bọc trong một **Giao dịch Bản vẽ Nháp (Draft Graph Transaction)**:
+- Sơ đồ được sinh thử nghiệm và kiểm tra tính toàn vẹn (tránh xung đột trùng tên biến hoặc tràn tài nguyên phần cứng).
+- Người dùng có thể đối chiếu trực quan (Diff View) các khối mới/thay đổi trước khi chấp nhận.
+- Thao tác áp dụng (`Apply`) được ghi nhận như một bước hoàn tác nguyên tử duy nhất — nhấn `Ctrl+Z` để hủy toàn bộ thay đổi ngay lập tức.
 
 ---
 

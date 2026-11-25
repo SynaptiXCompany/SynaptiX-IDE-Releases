@@ -22,7 +22,7 @@ The `TON` (**Timer On-Delay**) block delays the activation of its boolean output
 | Pin | Direction | Signal Kind | Data Type | Description |
 | :--- | :--- | :--- | :--- | :--- |
 | `In` | Input | Event / Execution (`IsEvent = true`) | Enabling State (`BOOL`) | Starts timing when asserted (`1`) and resets `ET` and `Q` immediately when de-asserted (`0`). Connects from [`INPUT`](/blocks/input), [`TRIGGER`](/blocks/trigger), or [`GUARD`](/blocks/guard). |
-| `Q` | Output | Value / Data (`IsEvent = false`) | `BOOL` (`0` / `1`) | Delayed boolean output bound to `OutputTag`; drives downstream [`ACTION`](/blocks/action), [`MQTT_PUB`](/blocks/mqtt-pub), [`HTTP_CLIENT`](/blocks/http-client), or [`TCP_CLIENT`](/blocks/tcp-client) blocks. |
+| `Q` | Output | Value / Data (`IsEvent = false`) | `BOOL` (`0` / `1`) | Delayed boolean output bound to `OutputTag`; drives downstream [`ACTION`](/blocks/action), [`MQTT_PUB`](/blocks/mqtt-pub), [`HTTP_CLIENT`](/blocks/http-client), or [`TCP_CLIENT`](/blocks/tcp-client) blocks. Supports multi-action Fan-Out wiring directly to multiple `ACTION` targets. |
 
 ---
 

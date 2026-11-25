@@ -1,13 +1,13 @@
 <template>
   <a
-    href="https://github.com/SynaptiXCompany/SynaptiX-IDE-Releases/releases/tag/v2.15.5"
+    href="https://github.com/SynaptiXCompany/SynaptiX-IDE-Releases/releases/tag/v2.15.11"
     target="_blank"
     rel="noopener noreferrer"
     class="synx-nav-version-badge"
-    title="Official SynaptiX IDE Release v2.15.5"
+    title="Official SynaptiX IDE Release v2.15.11"
   >
     <span class="synx-dot"></span>
-    <span class="synx-version-num">v2.15.5</span>
+    <span class="synx-version-num">v2.15.11</span>
   </a>
 </template>
 

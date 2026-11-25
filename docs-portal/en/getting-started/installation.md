@@ -35,10 +35,10 @@ Official SynaptiX IDE `win-x64 setup` release packages include all required depe
 
 ### 1. Step-by-Step Graphical Setup Wizard (Recommended)
 
-The official distribution package `SynaptiX_IDE_Setup_v2.15.0.exe` is engineered with Inno Setup 6 and LZMA2 ultra solid compression, providing a complete workstation setup in under 30 seconds:
+The official distribution package `SynaptiX_IDE_Setup_v2.15.11.exe` is engineered with Inno Setup 6 and LZMA2 ultra solid compression, providing a complete workstation setup in under 30 seconds:
 
 #### Step 1: Launch Installer & Welcome Screen
-Download `SynaptiX_IDE_Setup_v2.15.0.exe` from your enterprise portal or the official [synaptix-io.com](https://synaptix-io.com/downloads) release portal. Double-click the installer and accept the Windows User Account Control (UAC) prompt. The Welcome screen displays the software version:
+Download `SynaptiX_IDE_Setup_v2.15.11.exe` from your enterprise portal, the official [synaptix-io.com](https://synaptix-io.com/downloads) release portal, or [GitHub Releases](https://github.com/SynaptiXCompany/SynaptiX-IDE-Releases/releases/latest). Double-click the installer and accept the Windows User Account Control (UAC) prompt. The Welcome screen displays the software version:
 
 ![SynaptiX IDE Setup Wizard Welcome Screen](/images/synaptix_setup_step1_welcome.png)
 
@@ -85,10 +85,10 @@ For OT/IT systems engineers conducting bulk mass deployments across dozens of in
 
 ```powershell
 # Completely unattended silent setup with no popups or system restarts
-.\SynaptiX_IDE_Setup_v2.15.0.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG="synaptix_install.log"
+.\SynaptiX_IDE_Setup_v2.15.11.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG="synaptix_install.log"
 
 # Custom target installation directory
-.\SynaptiX_IDE_Setup_v2.15.0.exe /VERYSILENT /DIR="<TargetDirectory>\SynaptixIDE"
+.\SynaptiX_IDE_Setup_v2.15.11.exe /VERYSILENT /DIR="<TargetDirectory>\SynaptixIDE"
 
 # Unattended clean uninstallation
 "%ProgramFiles%\Synaptix Automation\SynaptiX IDE\unins000.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART

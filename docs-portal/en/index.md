@@ -38,7 +38,7 @@ This manual is organized sequentially into **six progressive chapters** in the l
   <a class="wiki-card" href="./blocks/overview">
     <span class="wiki-card-step">CHAPTER 04</span>
     <h3>Function Blocks Reference</h3>
-    <p>Dedicated datasheet specifications for all 18 visual blocks: Core Rule Pipeline, Timers, Counters, Linear Scale, Modbus RTU Master, Direct Hardware Output, MQTT, HTTP, and TCP.</p>
+    <p>Dedicated datasheet specifications for all 20 visual blocks: Core Rule Pipeline, Timers, Counters, Linear Scale, MATH Arithmetic ALU, Modbus RTU Master, Direct Hardware Output, MQTT, HTTP, and TCP.</p>
   </a>
   <a class="wiki-card" href="./tools/rs485-and-scada-slave">
     <span class="wiki-card-step">CHAPTER 05</span>

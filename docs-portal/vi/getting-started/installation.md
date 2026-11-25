@@ -35,10 +35,10 @@ Gói cài đặt chính thức `win-x64 setup` của SynaptiX IDE đã đóng g�
 
 ### 1. Cài đặt Đồ họa Từng Bước qua Setup Wizard (Khuyến nghị)
 
-Bộ cài đặt chính thức `SynaptiX_IDE_Setup_v2.15.0.exe` được phát triển trên nền tảng Inno Setup 6 với thuật toán nén siêu đặc LZMA2, giúp kỹ sư hoàn tất cài đặt toàn diện trong chưa đầy 30 giây:
+Bộ cài đặt chính thức `SynaptiX_IDE_Setup_v2.15.11.exe` được phát triển trên nền tảng Inno Setup 6 với thuật toán nén siêu đặc LZMA2, giúp kỹ sư hoàn tất cài đặt toàn diện trong chưa đầy 30 giây:
 
 #### Bước 1: Khởi động Trình Cài đặt & Màn hình Chào mừng
-Tải tệp `SynaptiX_IDE_Setup_v2.15.0.exe` từ cổng phát hành [synaptix-io.com](https://synaptix-io.com/downloads). Nhấp đúp vào tệp tin và xác nhận quyền quản trị Windows UAC. Màn hình chào mừng sẽ hiển thị thông tin phiên bản chính thức:
+Tải tệp `SynaptiX_IDE_Setup_v2.15.11.exe` từ cổng phát hành [synaptix-io.com](https://synaptix-io.com/downloads) hoặc [GitHub Releases](https://github.com/SynaptiXCompany/SynaptiX-IDE-Releases/releases/latest). Nhấp đúp vào tệp tin và xác nhận quyền quản trị Windows UAC. Màn hình chào mừng sẽ hiển thị thông tin phiên bản chính thức:
 
 ![Màn hình Chào mừng Cài đặt SynaptiX IDE](/images/synaptix_setup_step1_welcome.png)
 
@@ -85,10 +85,10 @@ Giữ dấu chọn **Launch SynaptiX IDE now** và nhấn **Finish** để khở
 
 ```powershell
 # Cài đặt hoàn toàn tự động, ẩn toàn bộ hộp thoại và không khởi động lại máy
-.\SynaptiX_IDE_Setup_v2.15.0.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG="synaptix_install.log"
+.\SynaptiX_IDE_Setup_v2.15.11.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /LOG="synaptix_install.log"
 
 # Chỉ định thư mục cài đặt tùy chỉnh
-.\SynaptiX_IDE_Setup_v2.15.0.exe /VERYSILENT /DIR="<TargetDirectory>\SynaptixIDE"
+.\SynaptiX_IDE_Setup_v2.15.11.exe /VERYSILENT /DIR="<TargetDirectory>\SynaptixIDE"
 
 # Gỡ bỏ cài đặt sạch sẽ tự động
 "%ProgramFiles%\Synaptix Automation\SynaptiX IDE\unins000.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART

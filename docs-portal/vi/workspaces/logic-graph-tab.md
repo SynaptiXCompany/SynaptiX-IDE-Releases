@@ -141,7 +141,14 @@ Mỗi khối hàm trên Logic Graph Canvas tách biệt nghiêm ngặt giữa lu
 | Dây Vuông góc 90 Độ | Đường mạch công nghiệp gấp khúc vuông góc (`IndustrialStepConnection`) với vùng nhận diện nhấp chuột ẩn rộng `12 px`. | Hỗ trợ nhấp chọn trực tiếp, nhấn `Del` để cắt dây và đổi màu động truyền sóng tín hiệu khi bật Mô phỏng (`F5`) hoặc Gỡ lỗi Trực tuyến (`F8`). |
 | Bắt dính Chân Hợp lệ | Đầu dây đang kéo chỉ bắt dính vào đúng chân ngõ vào/ngõ ra tương thích. | Dây thả lơ lửng giữa khoảng trống sẽ tự động hủy bỏ khi nhả chuột, giữ bản vẽ luôn sạch và không phát sinh nhánh cụt. |
 
-### 2.3. Bảng Phím tắt Điều hướng, Biên tập & Căn chỉnh Đa khối
+### 2.3. Đấu nối Đa Ngõ Ra Fan-Out (Multi-Action Fan-Out Wiring)
+
+Từ phiên bản v2.15.11, Logic Graph Canvas hỗ trợ cơ chế **Phân nhánh Đa ngõ ra (Fan-Out Wiring)** trực tiếp từ các khối hàm có trạng thái và khối tính toán:
+- **Kéo Dây Song Song Tự Do:** Từ một cổng ngõ ra duy nhất (như chân `Q` của bộ định thời `TON`, `TOF`, `TP`, `CYCLE`, chân `Q` của bộ đếm `CTU`, `CTD`, hoặc ngõ ra `Out` của khối `SCALE`, `MATH`), kỹ sư có thể kéo đồng thời nhiều đường dây nối tới các khối `ACTION` khác nhau (ví dụ: khi hết thời gian trễ `TON`, bật đồng thời cuộn hút `DO0 = 1`, còi báo `DO1 = 1` và cờ trạng thái `VFLAG0 = 1`).
+- **Cơ chế Hạ cấp Tự động (`Macro Lowering`):** Trình biên dịch quy tắc tự động phân bổ khối hành động đầu tiên làm biến chỉ huy chính (`primaryQTag`), sau đó nhân bản và đồng bộ hóa các cặp quy tắc BẬT/TẮT cho tất cả các nhánh hạ tầng liên kết mà không cần kỹ sư phải tạo khối trung gian phức tạp.
+- **Thẩm định Nhóm Ghi Có Kiểm soát (`Controlled Multi-Writer Group`):** Bộ kiểm tra xung đột ghi (`WriteConflictValidator`) tự động nhận diện và hợp thức hóa các quy tắc phân nhánh của cùng một macro Timer/Counter, bảo vệ người dùng khỏi báo động giả lỗi xung đột ghi (`ErrConflictingWriters`), đồng thời duy trì khả năng ngăn chặn các nguồn ghi ngoài can thiệp trái phép.
+
+### 2.4. Bảng Phím tắt Điều hướng, Biên tập & Căn chỉnh Đa khối
 
 Để trình bày các bản vẽ nhiều nhánh đạt chuẩn hồ sơ kỹ thuật tủ bảng điện, SynaptiX IDE trang bị hệ thống phím tắt thao tác nhanh chuẩn phần mềm CAD công nghiệp:
 
